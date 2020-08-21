@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 51da692757c33150dc8081a4e0dea685375d3fa46f36eabadcbb38585ba3164f
+-- hash: d4b117dc97bff33871ff36339d7ea0ad97df0ca7678fb27240a66944cbad04d4
 
 name:           HaskellBot
 version:        0.1.0.0
@@ -28,7 +28,7 @@ source-repository head
 library
   exposed-modules:
       Bot
-      Lib
+      Command
   other-modules:
       Paths_HaskellBot
   hs-source-dirs:
@@ -36,6 +36,7 @@ library
   build-depends:
       base >=4.7 && <5
     , discord-haskell
+    , random
     , text
     , unliftio
   default-language: Haskell2010

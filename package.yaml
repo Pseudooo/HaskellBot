@@ -28,6 +28,7 @@ library:
     - text
     - discord-haskell
     - unliftio
+    - random
 
 executables:
   HaskellBot-exe:
