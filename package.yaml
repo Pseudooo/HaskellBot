@@ -24,6 +24,10 @@ dependencies:
 
 library:
   source-dirs: src
+  dependencies:
+    - text
+    - discord-haskell
+    - unliftio
 
 executables:
   HaskellBot-exe:
@@ -36,8 +40,6 @@ executables:
     dependencies:
     - HaskellBot
     - text
-    - discord-haskell
-    - unliftio
 
 tests:
   HaskellBot-test:
