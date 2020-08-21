@@ -55,7 +55,6 @@ eventHandler event = case event of
   MessageCreate m -> when ((not . fromBot $ m) && isCommand m) $ execCommand m
   _ -> pure ()
 
-
 isTextChannel :: Channel -> Bool
 isTextChannel (ChannelText {}) = True
 isTextChannel _ = False

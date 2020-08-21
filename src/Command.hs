@@ -2,6 +2,8 @@
 
 module Command where
 
+import System.Random (randomRIO)
+
 import Control.Monad (when, forM_)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -21,7 +23,9 @@ execCommand msg
         _ <- restCall $ R.CreateMessage (messageChannel msg) "Get it right dickhead" 
         pure ()
     -- Valid commands follow
-    | otherwise = pure ()
+    | otherwise = (restCall $ R.CreateReaction (messageChannel msg, messageId msg) "white_check_mark")
+        >> case messageCommand msg of
+            "coinflip" -> coinflip msg
 
 isCommand :: Message -> Bool
 isCommand = T.isPrefixOf "!" . T.toLower . messageText
@@ -34,3 +38,12 @@ isValidCommand = (`elem` commands) . messageCommand
 
 commands :: [T.Text]
 commands = ["coinflip", "8ball"]
+
+coinflip :: Message -> DiscordHandler ()
+coinflip msg = do
+    flip <- liftIO $ randomRIO (1 :: Int, 2)
+    let text = T.append "Coin flipped: " $ if flip == 1
+            then "Heads"
+            else "Tails"
+    _ <- restCall $ R.CreateMessage (messageChannel msg) text
+    pure ()
