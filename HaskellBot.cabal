@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 51da692757c33150dc8081a4e0dea685375d3fa46f36eabadcbb38585ba3164f
+-- hash: 5ec05db19b35fb2afba35e7677cdeb3ad82c4c1b9f42dd42badc365abbaeccdd
 
 name:           HaskellBot
 version:        0.1.0.0
@@ -28,7 +28,7 @@ source-repository head
 library
   exposed-modules:
       Bot
-      Lib
+      Command
   other-modules:
       Paths_HaskellBot
   hs-source-dirs:

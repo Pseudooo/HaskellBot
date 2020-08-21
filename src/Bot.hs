@@ -2,6 +2,8 @@
 
 module Bot where
 
+import Command
+
 import Control.Monad (when, forM_)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -50,11 +52,9 @@ startHandler = do
 -- If an event handler throws an exception, discord-haskell will continue to run
 eventHandler :: Event -> DiscordHandler ()
 eventHandler event = case event of
-      MessageCreate m -> when (not (fromBot m) && isPing m) $ do
-        _ <- restCall (R.CreateReaction (messageChannel m, messageId m) "eyes")
-        _ <- restCall (R.CreateMessage (messageChannel m) "Pong!")
-        pure ()
-      _ -> pure ()
+  MessageCreate m -> when ((not . fromBot $ m) && isCommand m) $ execCommand m
+  _ -> pure ()
+
 
 isTextChannel :: Channel -> Bool
 isTextChannel (ChannelText {}) = True
@@ -62,6 +62,3 @@ isTextChannel _ = False
 
 fromBot :: Message -> Bool
 fromBot m = userIsBot (messageAuthor m)
-
-isPing :: Message -> Bool
-isPing = ("ping" `T.isPrefixOf`) . T.toLower . messageText
