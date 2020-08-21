@@ -35,6 +35,9 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - HaskellBot
+    - text
+    - discord-haskell
+    - unliftio
 
 tests:
   HaskellBot-test:
