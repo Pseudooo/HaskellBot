@@ -31,7 +31,7 @@ execCommand msg
     -- Case statement used to associate cmd strings with functions
     | otherwise = case messageCommand msg of
                     "coinflip" -> coinflip msg
-
+                    "8ball" -> eightball msg
 
 -- Check if a Message is a command (starts with !)
 isCommand :: Message -> Bool
@@ -95,3 +95,32 @@ coinflip msg = case messageCommandArgs msg of
 
     -- All other patterns are invalid
     _ -> negReact msg >> respond "Invalid Arguments" msg
+
+-- Will respond with a random eightball reply
+eightball :: Message -> DiscordHandler ()
+eightball msg = (liftIO $ randomRIO (0 :: Int, 19)) 
+    >>= \x -> (posReact msg >> respond (T.append "Eightball: " $ eightballResponses !! x) msg)
+
+-- List of possible 8ball responses
+eightballResponses :: [T.Text]
+eightballResponses =  ["As I see it, yes."
+                        , "Ask again later."
+                        , "Better not tell you now."
+                        , "Cannot predict now."
+                        , "Concentrate and ask again."
+                        , "Don’t count on it."
+                        , "It is certain."
+                        , "It is decidedly so."
+                        , "Most likely."
+                        , "My reply is no."
+                        , "My sources say no."
+                        , "Outlook not so good."
+                        , "Outlook good."
+                        , "Reply hazy, try again."
+                        , "Signs point to yes."
+                        , "Very doubtful."
+                        , "Without a doubt."
+                        , "Yes."
+                        , "Yes – definitely."
+                        , "You may rely on it."
+                        ]
